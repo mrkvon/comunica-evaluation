@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid'
-
-const myEngine = new QueryEngine()
+import {QueryEngineFactory} from '@comunica/query-sparql-link-traversal'
 
 function App() {
   useEffect(() => {
     (async () => {
+      console.log(QueryEngineFactory)
+      const factory = new QueryEngineFactory()
+      console.log(factory, '****')
+      const myEngine = await new QueryEngineFactory().create({
+        configPath:
+          'https://raw.githubusercontent.com/comunica/comunica-feature-link-traversal/master/engines/query-sparql-link-traversal/config/config-default.json',
+        //      './node_modules/@comunica/query-sparql-link-traversal/config/config-default.json',
+      })
 
       const bindingsStream = await myEngine.queryBindings(`
         PREFIX foaf: <http://xmlns.com/foaf/0.1/>
